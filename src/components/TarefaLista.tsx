@@ -1,19 +1,12 @@
-import React from "react";
-import { Tarefa } from "../models/Tarefa";
+import React, { useContext } from "react";
+import { TarefaContext } from "../contexts/TarefaContext";
+import { TarefaContextType } from "../contexts/TarefaContextType";
 import TarefaListaItem from "./TarefaListaItem";
 
 const TarefaLista = () => {
-  const tarefas: Tarefa[] = [];
-  return(
+  const { tarefas } = useContext<TarefaContextType>(TarefaContext);
+  return (
     <table className="uk-table">
-      <caption>Lista Tarefas</caption>
-      <thead>
-        <tr>
-          <th>#</th>
-          <th>Tarefa</th>
-          <th></th>
-        </tr>
-      </thead>
       <tbody>
         {
           tarefas?.map(
@@ -24,7 +17,7 @@ const TarefaLista = () => {
         }
       </tbody>
     </table>
-    );
+  );
 };
 
 export default TarefaLista;

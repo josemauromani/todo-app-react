@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useContext } from "react";
+import { TarefaContext } from "../contexts/TarefaContext";
+import { TarefaContextType } from "../contexts/TarefaContextType";
 import { Tarefa } from "../models/Tarefa";
 
 interface TarefaListaItemProps {
@@ -7,12 +9,14 @@ interface TarefaListaItemProps {
 
 const TarefaListaItem = (props: TarefaListaItemProps) => {
 
+  const { removeTarefa, toggle } = useContext<TarefaContextType>(TarefaContext);
+
   const onRemove = (tarefa: Tarefa) => {
-    console.log(tarefa);
+    removeTarefa(tarefa);
   }
 
   const handleChange = () => {
-    console.log('mudou');
+    toggle(props.tarefa);
   }
 
   return (

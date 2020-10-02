@@ -29,7 +29,7 @@ const TarefaProvider = (props: any) => {
   }
 
   return (
-    <TarefaContext.Provider value={}>
+    <TarefaContext.Provider value={{ tarefas, addTarefa, removeTarefa, toggle }}>
       {props.children}
     </TarefaContext.Provider>
   )
