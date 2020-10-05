@@ -1,5 +1,6 @@
-import React, { createContext } from 'react';
+import React, { createContext, useEffect, useState } from 'react';
 import { Tarefa } from '../models/Tarefa';
+import { get, save } from '../services/TarefaService';
 import { TarefaContextType } from './TarefaContextType';
 
 export const TarefaContext = createContext<TarefaContextType>({
@@ -11,21 +12,26 @@ export const TarefaContext = createContext<TarefaContextType>({
 
 const TarefaProvider = (props: any) => {
 
-  const tarefas: Tarefa[] = [
-    { id: 1, title: 'Planning', done: true },
-    { id: 2, title: 'Review', done: false }
-  ];
+  const [tarefas, setTarefas] = useState<Tarefa[]>(get);
+
+  useEffect(() => {
+    save(tarefas);
+  }, [tarefas]);
 
   const addTarefa = (title: any) => {
-    console.log('Adicionou ' + title);
+    const tarefa: Tarefa = { id: tarefas.length + 1, title: title, done: false }
+    setTarefas([...tarefas, tarefa]);
   }
 
   const removeTarefa = (tarefa: Tarefa) => {
-    console.log('Removeu ' + tarefa.title);
+    const index = tarefas.indexOf(tarefa);
+    setTarefas(tarefas.filter((_, i) => i !== index));
   }
 
   const toggle = (tarefa: Tarefa) => {
-    console.log('Alterou ' + tarefa.title);
+    const index = tarefas.indexOf(tarefa);
+    tarefas[index].done = !tarefa.done;
+    setTarefas([...tarefas]);
   }
 
   return (
